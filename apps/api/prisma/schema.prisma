@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  TECHNICIAN
+  PUBLIC
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String
+  role     UserRole
+}
+
+enum EventType {
+  START
+  END
+}
+
+model Event {
+  id        Int       @id @default(autoincrement())
+  type      EventType
+  time      DateTime
+  confirmed Boolean
+  session   Session   @relation(fields: [sessionId], references: [id])
+  sessionId Int
+  delayLog  DelayLog?
+}
+
+model Movie {
+  id          Int       @id @default(autoincrement())
+  title       String
+  runningTime Int // ms
+  realisateur String
+  posterPath  String?
+  sessions    Session[]
+}
+
+enum SessionType {
+  PROJECTION
+  DEBAT
+  PAUSE
+  OTHER
+}
+
+model Session {
+  id                Int @id @default(autoincrement())
+  originalStartTime Int // ms
+  expectedLength    Int // ms
+
+  startTime DateTime
+  endTime   DateTime
+
+  events  Event[] // 2 : START | END
+  delayed Boolean
+  delay   Int     @default(0)
+
+  type SessionType
+
+  movie   Movie? @relation(fields: [movieId], references: [id])
+  movieId Int?
+
+  title       String
+  description String
+
+  timeline   Timeline @relation(fields: [timelineId], references: [id])
+  timelineId Int
+}
+
+model Timeline {
+  id       Int       @id @default(autoincrement())
+  salleId  Int       @unique
+  salle    Salle     @relation(fields: [salleId], references: [id])
+  sessions Session[]
+}
+
+model Salle {
+  id       Int       @id @default(autoincrement())
+  name     String
+  timeline Timeline?
+}
+
+enum DelayActionType {
+  CONTAIN
+  PROPAGATE
+}
+
+model DelayLog {
+  id         Int             @id @default(autoincrement())
+  delayStart DateTime
+  delayEnd   DateTime
+  event      Event           @relation(fields: [eventId], references: [id])
+  eventId    Int             @unique
+  action     DelayActionType
+}
