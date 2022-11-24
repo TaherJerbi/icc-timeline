@@ -21,5 +21,8 @@
     "node": ">=14.0.0"
   },
   "dependencies": {},
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "graphql-typegen": {
+    "server": "http://localhost:4000/graphql"
+  }
 }

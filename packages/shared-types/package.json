@@ -1,7 +1,0 @@
-{
-  "name": "shared-types",
-  "version": "1.0.0",
-  "main": "nexus-typegen.ts",
-  "types": "nexus-typegen.ts",
-  "license": "MIT"
-}

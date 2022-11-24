@@ -1,22 +1,17 @@
 // api/schema.ts
 import { makeSchema } from "nexus";
 import { join } from "path";
-import { NexusGenFieldTypeNames } from "shared-types";
+import NexusPrismaScalars from "nexus-prisma/scalars";
+import * as Types from "./types";
 
-import * as UserTypes from "./models/User";
 export const schema = makeSchema({
-  types: UserTypes, // 1
+  types: [Types, NexusPrismaScalars],
   contextType: {
-    module: join(__dirname, "..", "Context.ts"),
+    module: require.resolve("../Context.ts"),
     export: "Context",
-    alias: "Context",
   },
   outputs: {
-    typegen: join(
-      __dirname,
-      "../../../../packages/shared-types/",
-      "nexus-typegen.ts"
-    ), // 2
+    typegen: join(__dirname, "..", "nexus-typegen.ts"),
     schema: join(__dirname, "..", "schema.graphql"), // 3
   },
 });
