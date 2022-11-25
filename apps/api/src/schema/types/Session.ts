@@ -9,14 +9,14 @@ export const NexusSession = objectType({
   definition(t) {
     t.field(Session.id);
     t.field(Session.originalStartTime);
-    t.field(Session.expectedLength);
+    t.field(Session.originalEndTime);
     t.field(Session.startTime);
     t.field(Session.endTime);
     t.field(Session.events);
     t.field(Session.delayed);
     t.field(Session.delay);
     t.field(Session.movie);
-    t.field(Session.movieId);
+    t.field(Session.movieSlug);
     t.field(Session.title);
     t.field(Session.description);
     t.field(Session.timeline);

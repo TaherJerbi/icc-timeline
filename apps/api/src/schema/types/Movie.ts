@@ -11,5 +11,6 @@ export const NexusMovie = objectType({
     t.field(Movie.realisateur);
     t.field(Movie.posterPath);
     t.field(Movie.sessions);
+    t.field(Movie.movieSlug);
   },
 });

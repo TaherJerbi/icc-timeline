@@ -44,10 +44,12 @@ model Event {
 model Movie {
   id          String    @id @default(cuid())
   title       String
+  description String
   runningTime Int // ms
   realisateur String
   posterPath  String?
   sessions    Session[]
+  movieSlug   String    @unique
 }
 
 enum SessionType {
@@ -60,19 +62,19 @@ enum SessionType {
 model Session {
   id                String   @id @default(cuid())
   originalStartTime DateTime
-  expectedLength    Int // ms
+  originalEndTime   DateTime // ms
 
   startTime DateTime
   endTime   DateTime
 
   events  Event[] // 2 : START | END
-  delayed Boolean
+  delayed Boolean @default(false)
   delay   Int     @default(0)
 
   type SessionType
 
-  movie   Movie?  @relation(fields: [movieId], references: [id])
-  movieId String?
+  movie     Movie?  @relation(fields: [movieSlug], references: [movieSlug])
+  movieSlug String?
 
   title       String
   description String

@@ -63,6 +63,18 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  populateTimelinesInput: { // input type
+    description: string; // String!
+    endTime: NexusGenScalars['DateTime']; // DateTime!
+    movieSlug?: string | null; // String
+    posterPath?: string | null; // String
+    realisateur?: string | null; // String
+    runningTime?: number | null; // Int
+    salle: string; // String!
+    startTime: NexusGenScalars['DateTime']; // DateTime!
+    title: string; // String!
+    type: NexusGenEnums['SessionType']; // SessionType!
+  }
 }
 
 export interface NexusGenEnums {
@@ -102,6 +114,7 @@ export interface NexusGenObjects {
   }
   Movie: { // root type
     id: string; // ID!
+    movieSlug: string; // String!
     posterPath?: string | null; // String
     realisateur: string; // String!
     runningTime: number; // Int!
@@ -117,9 +130,9 @@ export interface NexusGenObjects {
     delayed: boolean; // Boolean!
     description: string; // String!
     endTime: NexusGenScalars['DateTime']; // DateTime!
-    expectedLength: number; // Int!
     id: string; // ID!
-    movieId?: string | null; // String
+    movieSlug?: string | null; // String
+    originalEndTime: NexusGenScalars['DateTime']; // DateTime!
     originalStartTime: NexusGenScalars['DateTime']; // DateTime!
     startTime: NexusGenScalars['DateTime']; // DateTime!
     timelineId: string; // String!
@@ -166,6 +179,7 @@ export interface NexusGenFieldTypes {
   }
   Movie: { // field return type
     id: string; // ID!
+    movieSlug: string; // String!
     posterPath: string | null; // String
     realisateur: string; // String!
     runningTime: number; // Int!
@@ -174,6 +188,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     events: NexusGenRootTypes['Event'][]; // [Event!]!
+    populateTimelines: NexusGenRootTypes['Timeline'][]; // [Timeline!]!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Salle: { // field return type
@@ -187,10 +202,10 @@ export interface NexusGenFieldTypes {
     description: string; // String!
     endTime: NexusGenScalars['DateTime']; // DateTime!
     events: NexusGenRootTypes['Event'][]; // [Event!]!
-    expectedLength: number; // Int!
     id: string; // ID!
     movie: NexusGenRootTypes['Movie'] | null; // Movie
-    movieId: string | null; // String
+    movieSlug: string | null; // String
+    originalEndTime: NexusGenScalars['DateTime']; // DateTime!
     originalStartTime: NexusGenScalars['DateTime']; // DateTime!
     startTime: NexusGenScalars['DateTime']; // DateTime!
     timeline: NexusGenRootTypes['Timeline']; // Timeline!
@@ -230,6 +245,7 @@ export interface NexusGenFieldTypeNames {
   }
   Movie: { // field return type name
     id: 'ID'
+    movieSlug: 'String'
     posterPath: 'String'
     realisateur: 'String'
     runningTime: 'Int'
@@ -238,6 +254,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     events: 'Event'
+    populateTimelines: 'Timeline'
     users: 'User'
   }
   Salle: { // field return type name
@@ -251,10 +268,10 @@ export interface NexusGenFieldTypeNames {
     description: 'String'
     endTime: 'DateTime'
     events: 'Event'
-    expectedLength: 'Int'
     id: 'ID'
     movie: 'Movie'
-    movieId: 'String'
+    movieSlug: 'String'
+    originalEndTime: 'DateTime'
     originalStartTime: 'DateTime'
     startTime: 'DateTime'
     timeline: 'Timeline'
@@ -275,6 +292,11 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Query: {
+    populateTimelines: { // args
+      sessionsInput: NexusGenInputs['populateTimelinesInput'][]; // [populateTimelinesInput!]!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -285,7 +307,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = keyof NexusGenEnums;
 

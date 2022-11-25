@@ -1,10 +1,12 @@
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { Button } from "ui";
 import { EventsQuery } from "../src/gql/graphql";
 export default function Web() {
+  const { data, loading, error } = useQuery<EventsQuery>(events);
+
   return (
     <div>
-      <h1>Web</h1>
+      <h1>{data?.events.map((e) => e.session.id)}</h1>
       <Button />
     </div>
   );
