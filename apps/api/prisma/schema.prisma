@@ -36,9 +36,11 @@ model Event {
   type      EventType
   time      DateTime
   confirmed Boolean   @default(false)
-  session   Session   @relation(fields: [sessionId], references: [id])
+  session   Session   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   sessionId String
   delayLog  DelayLog?
+
+  createdAt DateTime @default(now())
 }
 
 model Movie {
@@ -50,6 +52,8 @@ model Movie {
   posterPath  String?
   sessions    Session[]
   movieSlug   String    @unique
+
+  createdAt DateTime @default(now())
 }
 
 enum SessionType {
@@ -79,21 +83,27 @@ model Session {
   title       String
   description String
 
-  timeline   Timeline @relation(fields: [timelineId], references: [id])
+  timeline   Timeline @relation(fields: [timelineId], references: [id], onDelete: Cascade)
   timelineId String
+
+  createdAt DateTime @default(now())
 }
 
 model Timeline {
   id       String    @id @default(cuid())
   salleId  String    @unique
-  salle    Salle     @relation(fields: [salleId], references: [id])
+  salle    Salle     @relation(fields: [salleId], references: [id], onDelete: Cascade)
   sessions Session[]
+
+  createdAt DateTime @default(now())
 }
 
 model Salle {
   id       String    @id @default(cuid())
   name     String
   timeline Timeline?
+
+  createdAt DateTime @default(now())
 }
 
 enum DelayActionType {
@@ -108,4 +118,6 @@ model DelayLog {
   event      Event           @relation(fields: [eventId], references: [id])
   eventId    String          @unique
   action     DelayActionType
+
+  createdAt DateTime @default(now())
 }

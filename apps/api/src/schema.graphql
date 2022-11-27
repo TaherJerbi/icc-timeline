@@ -65,6 +65,7 @@ type Movie {
 }
 
 type Mutation {
+  deleteTimeline(timelineId: String!): Timeline
   populateTimelines(moviesInput: [PopulateTimelinesMoviesInput!]!, sessionsInput: [PopulateTimelinesSessionsInput!]!): [Timeline!]!
 }
 
@@ -89,6 +90,7 @@ input PopulateTimelinesSessionsInput {
 
 type Query {
   events: [Event!]!
+  timelines: [Timeline!]!
   users: [User!]!
 }
 
@@ -113,6 +115,7 @@ type Session {
   timeline: Timeline!
   timelineId: String!
   title: String!
+  type: SessionType!
 }
 
 enum SessionType {
@@ -123,6 +126,7 @@ enum SessionType {
 }
 
 type Timeline {
+  createdAt: DateTime!
   id: ID!
   salle: Salle!
   salleId: String!

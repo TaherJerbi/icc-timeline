@@ -144,8 +144,10 @@ export interface NexusGenObjects {
     startTime: NexusGenScalars['DateTime']; // DateTime!
     timelineId: string; // String!
     title: string; // String!
+    type: NexusGenEnums['SessionType']; // SessionType!
   }
   Timeline: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
     salleId: string; // String!
   }
@@ -195,10 +197,12 @@ export interface NexusGenFieldTypes {
     title: string; // String!
   }
   Mutation: { // field return type
+    deleteTimeline: NexusGenRootTypes['Timeline'] | null; // Timeline
     populateTimelines: NexusGenRootTypes['Timeline'][]; // [Timeline!]!
   }
   Query: { // field return type
     events: NexusGenRootTypes['Event'][]; // [Event!]!
+    timelines: NexusGenRootTypes['Timeline'][]; // [Timeline!]!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Salle: { // field return type
@@ -221,8 +225,10 @@ export interface NexusGenFieldTypes {
     timeline: NexusGenRootTypes['Timeline']; // Timeline!
     timelineId: string; // String!
     title: string; // String!
+    type: NexusGenEnums['SessionType']; // SessionType!
   }
   Timeline: { // field return type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
     salle: NexusGenRootTypes['Salle']; // Salle!
     salleId: string; // String!
@@ -264,10 +270,12 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
   }
   Mutation: { // field return type name
+    deleteTimeline: 'Timeline'
     populateTimelines: 'Timeline'
   }
   Query: { // field return type name
     events: 'Event'
+    timelines: 'Timeline'
     users: 'User'
   }
   Salle: { // field return type name
@@ -290,8 +298,10 @@ export interface NexusGenFieldTypeNames {
     timeline: 'Timeline'
     timelineId: 'String'
     title: 'String'
+    type: 'SessionType'
   }
   Timeline: { // field return type name
+    createdAt: 'DateTime'
     id: 'ID'
     salle: 'Salle'
     salleId: 'String'
@@ -306,6 +316,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    deleteTimeline: { // args
+      timelineId: string; // String!
+    }
     populateTimelines: { // args
       moviesInput: NexusGenInputs['PopulateTimelinesMoviesInput'][]; // [PopulateTimelinesMoviesInput!]!
       sessionsInput: NexusGenInputs['PopulateTimelinesSessionsInput'][]; // [PopulateTimelinesSessionsInput!]!

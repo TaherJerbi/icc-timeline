@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn prisma generate && ts-node-dev  ./src/main.ts"
+    "dev": "concurrently \"yarn prisma generate\" \"ts-node-dev  ./src/main.ts\""
   },
   "dependencies": {
     "@apollo/server": "^4.2.0",

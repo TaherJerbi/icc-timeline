@@ -8,6 +8,7 @@ export const NexusSession = objectType({
   description: Session.$description,
   definition(t) {
     t.field(Session.id);
+    t.field(Session.type);
     t.field(Session.originalStartTime);
     t.field(Session.originalEndTime);
     t.field(Session.startTime);
