@@ -54,6 +54,7 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 scalar Json @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
 type Movie {
+  description: String!
   id: ID!
   movieSlug: String!
   posterPath: String
@@ -63,9 +64,31 @@ type Movie {
   title: String!
 }
 
+type Mutation {
+  populateTimelines(moviesInput: [PopulateTimelinesMoviesInput!]!, sessionsInput: [PopulateTimelinesSessionsInput!]!): [Timeline!]!
+}
+
+input PopulateTimelinesMoviesInput {
+  description: String!
+  movieSlug: String!
+  posterPath: String
+  realisateur: String!
+  runningTime: Int!
+  title: String!
+}
+
+input PopulateTimelinesSessionsInput {
+  description: String!
+  endTime: DateTime!
+  movieSlug: String
+  salle: String!
+  startTime: DateTime!
+  title: String!
+  type: SessionType!
+}
+
 type Query {
   events: [Event!]!
-  populateTimelines(sessionsInput: [populateTimelinesInput!]!): [Timeline!]!
   users: [User!]!
 }
 
@@ -116,17 +139,4 @@ enum UserRole {
   ADMIN
   PUBLIC
   TECHNICIAN
-}
-
-input populateTimelinesInput {
-  description: String!
-  endTime: DateTime!
-  movieSlug: String
-  posterPath: String
-  realisateur: String
-  runningTime: Int
-  salle: String!
-  startTime: DateTime!
-  title: String!
-  type: SessionType!
 }

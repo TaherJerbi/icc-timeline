@@ -13,13 +13,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n  query Events {\n    events {\n      id\n      session {\n        id\n        events {\n          id\n          time\n        }\n      }\n    }\n  }\n": types.EventsDocument,
+    "\n    mutation PopulateTimelines(\n      $moviesInput: [PopulateTimelinesMoviesInput!]!\n      $sessionsInput: [PopulateTimelinesSessionsInput!]!\n    ) {\n      populateTimelines(\n        moviesInput: $moviesInput\n        sessionsInput: $sessionsInput\n      ) {\n        id\n        salle {\n          name\n          id\n        }\n        sessions {\n          id\n          movie {\n            movieSlug\n            title\n            description\n            runningTime\n          }\n          movieSlug\n          startTime\n          endTime\n          title\n          description\n        }\n      }\n    }\n  ": types.PopulateTimelinesDocument,
 };
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Events {\n    events {\n      id\n      session {\n        id\n        events {\n          id\n          time\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query Events {\n    events {\n      id\n      session {\n        id\n        events {\n          id\n          time\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n    mutation PopulateTimelines(\n      $moviesInput: [PopulateTimelinesMoviesInput!]!\n      $sessionsInput: [PopulateTimelinesSessionsInput!]!\n    ) {\n      populateTimelines(\n        moviesInput: $moviesInput\n        sessionsInput: $sessionsInput\n      ) {\n        id\n        salle {\n          name\n          id\n        }\n        sessions {\n          id\n          movie {\n            movieSlug\n            title\n            description\n            runningTime\n          }\n          movieSlug\n          startTime\n          endTime\n          title\n          description\n        }\n      }\n    }\n  "): (typeof documents)["\n    mutation PopulateTimelines(\n      $moviesInput: [PopulateTimelinesMoviesInput!]!\n      $sessionsInput: [PopulateTimelinesSessionsInput!]!\n    ) {\n      populateTimelines(\n        moviesInput: $moviesInput\n        sessionsInput: $sessionsInput\n      ) {\n        id\n        salle {\n          name\n          id\n        }\n        sessions {\n          id\n          movie {\n            movieSlug\n            title\n            description\n            runningTime\n          }\n          movieSlug\n          startTime\n          endTime\n          title\n          description\n        }\n      }\n    }\n  "];
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

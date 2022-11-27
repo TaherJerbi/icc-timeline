@@ -63,13 +63,18 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  populateTimelinesInput: { // input type
+  PopulateTimelinesMoviesInput: { // input type
+    description: string; // String!
+    movieSlug: string; // String!
+    posterPath?: string | null; // String
+    realisateur: string; // String!
+    runningTime: number; // Int!
+    title: string; // String!
+  }
+  PopulateTimelinesSessionsInput: { // input type
     description: string; // String!
     endTime: NexusGenScalars['DateTime']; // DateTime!
     movieSlug?: string | null; // String
-    posterPath?: string | null; // String
-    realisateur?: string | null; // String
-    runningTime?: number | null; // Int
     salle: string; // String!
     startTime: NexusGenScalars['DateTime']; // DateTime!
     title: string; // String!
@@ -113,6 +118,7 @@ export interface NexusGenObjects {
     type: NexusGenEnums['EventType']; // EventType!
   }
   Movie: { // root type
+    description: string; // String!
     id: string; // ID!
     movieSlug: string; // String!
     posterPath?: string | null; // String
@@ -120,6 +126,7 @@ export interface NexusGenObjects {
     runningTime: number; // Int!
     title: string; // String!
   }
+  Mutation: {};
   Query: {};
   Salle: { // root type
     id: string; // ID!
@@ -178,6 +185,7 @@ export interface NexusGenFieldTypes {
     type: NexusGenEnums['EventType']; // EventType!
   }
   Movie: { // field return type
+    description: string; // String!
     id: string; // ID!
     movieSlug: string; // String!
     posterPath: string | null; // String
@@ -186,9 +194,11 @@ export interface NexusGenFieldTypes {
     sessions: NexusGenRootTypes['Session'][]; // [Session!]!
     title: string; // String!
   }
+  Mutation: { // field return type
+    populateTimelines: NexusGenRootTypes['Timeline'][]; // [Timeline!]!
+  }
   Query: { // field return type
     events: NexusGenRootTypes['Event'][]; // [Event!]!
-    populateTimelines: NexusGenRootTypes['Timeline'][]; // [Timeline!]!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Salle: { // field return type
@@ -244,6 +254,7 @@ export interface NexusGenFieldTypeNames {
     type: 'EventType'
   }
   Movie: { // field return type name
+    description: 'String'
     id: 'ID'
     movieSlug: 'String'
     posterPath: 'String'
@@ -252,9 +263,11 @@ export interface NexusGenFieldTypeNames {
     sessions: 'Session'
     title: 'String'
   }
+  Mutation: { // field return type name
+    populateTimelines: 'Timeline'
+  }
   Query: { // field return type name
     events: 'Event'
-    populateTimelines: 'Timeline'
     users: 'User'
   }
   Salle: { // field return type name
@@ -292,9 +305,10 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
-  Query: {
+  Mutation: {
     populateTimelines: { // args
-      sessionsInput: NexusGenInputs['populateTimelinesInput'][]; // [populateTimelinesInput!]!
+      moviesInput: NexusGenInputs['PopulateTimelinesMoviesInput'][]; // [PopulateTimelinesMoviesInput!]!
+      sessionsInput: NexusGenInputs['PopulateTimelinesSessionsInput'][]; // [PopulateTimelinesSessionsInput!]!
     }
   }
 }

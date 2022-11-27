@@ -5,4 +5,4 @@ export * from "./Session";
 export * from "./DelayLog";
 export * from "./Salle";
 export * from "./Timeline";
-export * from "./Query";
+export * from "./Mutation";

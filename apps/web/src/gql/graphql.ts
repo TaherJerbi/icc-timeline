@@ -60,12 +60,44 @@ export enum EventType {
 
 export type Movie = {
   __typename?: 'Movie';
+  description: Scalars['String'];
   id: Scalars['ID'];
+  movieSlug: Scalars['String'];
   posterPath?: Maybe<Scalars['String']>;
   realisateur: Scalars['String'];
   runningTime: Scalars['Int'];
   sessions: Array<Session>;
   title: Scalars['String'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  populateTimelines: Array<Timeline>;
+};
+
+
+export type MutationPopulateTimelinesArgs = {
+  moviesInput: Array<PopulateTimelinesMoviesInput>;
+  sessionsInput: Array<PopulateTimelinesSessionsInput>;
+};
+
+export type PopulateTimelinesMoviesInput = {
+  description: Scalars['String'];
+  movieSlug: Scalars['String'];
+  posterPath?: InputMaybe<Scalars['String']>;
+  realisateur: Scalars['String'];
+  runningTime: Scalars['Int'];
+  title: Scalars['String'];
+};
+
+export type PopulateTimelinesSessionsInput = {
+  description: Scalars['String'];
+  endTime: Scalars['DateTime'];
+  movieSlug?: InputMaybe<Scalars['String']>;
+  salle: Scalars['String'];
+  startTime: Scalars['DateTime'];
+  title: Scalars['String'];
+  type: SessionType;
 };
 
 export type Query = {
@@ -88,10 +120,10 @@ export type Session = {
   description: Scalars['String'];
   endTime: Scalars['DateTime'];
   events: Array<Event>;
-  expectedLength: Scalars['Int'];
   id: Scalars['ID'];
   movie?: Maybe<Movie>;
-  movieId?: Maybe<Scalars['String']>;
+  movieSlug?: Maybe<Scalars['String']>;
+  originalEndTime: Scalars['DateTime'];
   originalStartTime: Scalars['DateTime'];
   startTime: Scalars['DateTime'];
   timeline: Timeline;
@@ -127,10 +159,13 @@ export enum UserRole {
   Technician = 'TECHNICIAN'
 }
 
-export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
+export type PopulateTimelinesMutationVariables = Exact<{
+  moviesInput: Array<PopulateTimelinesMoviesInput> | PopulateTimelinesMoviesInput;
+  sessionsInput: Array<PopulateTimelinesSessionsInput> | PopulateTimelinesSessionsInput;
+}>;
 
 
-export type EventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: string, session: { __typename?: 'Session', id: string, events: Array<{ __typename?: 'Event', id: string, time: any }> } }> };
+export type PopulateTimelinesMutation = { __typename?: 'Mutation', populateTimelines: Array<{ __typename?: 'Timeline', id: string, salle: { __typename?: 'Salle', name: string, id: string }, sessions: Array<{ __typename?: 'Session', id: string, movieSlug?: string | null, startTime: any, endTime: any, title: string, description: string, movie?: { __typename?: 'Movie', movieSlug: string, title: string, description: string, runningTime: number } | null }> }> };
 
 
-export const EventsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"session"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"time"}}]}}]}}]}}]}}]} as unknown as DocumentNode<EventsQuery, EventsQueryVariables>;
+export const PopulateTimelinesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PopulateTimelines"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"moviesInput"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PopulateTimelinesMoviesInput"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sessionsInput"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PopulateTimelinesSessionsInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"populateTimelines"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"moviesInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"moviesInput"}}},{"kind":"Argument","name":{"kind":"Name","value":"sessionsInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sessionsInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"salle"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sessions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"movie"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movieSlug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"runningTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"movieSlug"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}},{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]} as unknown as DocumentNode<PopulateTimelinesMutation, PopulateTimelinesMutationVariables>;
