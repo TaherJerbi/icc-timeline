@@ -72,7 +72,13 @@ export type Movie = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  deleteTimeline?: Maybe<Timeline>;
   populateTimelines: Array<Timeline>;
+};
+
+
+export type MutationDeleteTimelineArgs = {
+  timelineId: Scalars['String'];
 };
 
 
@@ -103,6 +109,7 @@ export type PopulateTimelinesSessionsInput = {
 export type Query = {
   __typename?: 'Query';
   events: Array<Event>;
+  timelines: Array<Timeline>;
   users: Array<User>;
 };
 
@@ -129,6 +136,7 @@ export type Session = {
   timeline: Timeline;
   timelineId: Scalars['String'];
   title: Scalars['String'];
+  type: SessionType;
 };
 
 export enum SessionType {
@@ -140,6 +148,7 @@ export enum SessionType {
 
 export type Timeline = {
   __typename?: 'Timeline';
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   salle: Salle;
   salleId: Scalars['String'];
@@ -167,5 +176,11 @@ export type PopulateTimelinesMutationVariables = Exact<{
 
 export type PopulateTimelinesMutation = { __typename?: 'Mutation', populateTimelines: Array<{ __typename?: 'Timeline', id: string, salle: { __typename?: 'Salle', name: string, id: string }, sessions: Array<{ __typename?: 'Session', id: string, movieSlug?: string | null, startTime: any, endTime: any, title: string, description: string, movie?: { __typename?: 'Movie', movieSlug: string, title: string, description: string, runningTime: number } | null }> }> };
 
+export type TimelinesTableQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TimelinesTableQuery = { __typename?: 'Query', timelines: Array<{ __typename?: 'Timeline', id: string, createdAt: any, salle: { __typename?: 'Salle', name: string }, sessions: Array<{ __typename?: 'Session', title: string, startTime: any, endTime: any, events: Array<{ __typename?: 'Event', confirmed: boolean, type: EventType, time: any, delayLog?: { __typename?: 'DelayLog', id: string, delayStart: any, delayEnd: any } | null }>, movie?: { __typename?: 'Movie', movieSlug: string, title: string } | null }> }> };
+
 
 export const PopulateTimelinesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PopulateTimelines"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"moviesInput"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PopulateTimelinesMoviesInput"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sessionsInput"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PopulateTimelinesSessionsInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"populateTimelines"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"moviesInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"moviesInput"}}},{"kind":"Argument","name":{"kind":"Name","value":"sessionsInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sessionsInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"salle"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sessions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"movie"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movieSlug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"runningTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"movieSlug"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}},{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]} as unknown as DocumentNode<PopulateTimelinesMutation, PopulateTimelinesMutationVariables>;
+export const TimelinesTableDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TimelinesTable"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"timelines"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"salle"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sessions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}},{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"confirmed"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"delayLog"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"delayStart"}},{"kind":"Field","name":{"kind":"Name","value":"delayEnd"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"movie"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movieSlug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]}}]} as unknown as DocumentNode<TimelinesTableQuery, TimelinesTableQueryVariables>;

@@ -8,9 +8,12 @@ import {
   PopulateTimelinesMutationVariables,
   PopulateTimelinesSessionsInput,
   SessionType,
-} from "../../src/gql/graphql";
+} from "@gql-types/graphql";
 import { LoadingButton } from "@mui/lab";
-import notion_time_to_dates from "../../src/utils/notion_time_to_dates";
+import { Box } from "@mui/material";
+import notion_time_to_dates from "@utils/notion_time_to_dates";
+import MovieGrid from "@components/movie-grid";
+import SessionsGrid from "@components/sessions-grid";
 
 const movieSchema = z.array(
   z.object({
@@ -116,27 +119,50 @@ function PopulatePage() {
   };
   return (
     <div>
-      <p>Movies CSV</p>
-      <input
-        type={"file"}
-        onChange={moviesChangeHandler}
-        accept={".csv"}
-        size={1}
-        name={"movies"}
-      />
-      <p>{JSON.stringify(parsedMovies ?? "No movies")}</p>
+      <h1>Populate Timelines</h1>
+      <Box
+        sx={{
+          display: "flex",
+          width: "100vw",
+        }}
+      >
+        <Box
+          sx={{
+            flexGrow: "1",
+            marginRight: 4,
+          }}
+        >
+          <h2>Movies CSV</h2>
+          <input
+            type={"file"}
+            onChange={moviesChangeHandler}
+            accept={".csv"}
+            size={1}
+            name={"movies"}
+          />
 
-      <hr />
-
-      <p>Sessions CSV</p>
-      <input
-        type={"file"}
-        onChange={sessionsChangeHandler}
-        accept={".csv"}
-        size={1}
-        name={"sessions"}
-      />
-      <p>{JSON.stringify(parsedSessions ?? "No sessions")}</p>
+          <Box sx={{ height: 400, width: "100%" }}>
+            {parsedMovies && <MovieGrid movies={parsedMovies} />}
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            flexGrow: "2",
+          }}
+        >
+          <h2>Sessions CSV</h2>
+          <input
+            type={"file"}
+            onChange={sessionsChangeHandler}
+            accept={".csv"}
+            size={1}
+            name={"sessions"}
+          />
+          <Box sx={{ height: 400, width: "100%" }}>
+            {parsedSessions && <SessionsGrid sessions={parsedSessions} />}
+          </Box>
+        </Box>
+      </Box>
       <LoadingButton
         disabled={!parsedMovies || !parsedSessions}
         loading={populateTimelinesResult.loading}

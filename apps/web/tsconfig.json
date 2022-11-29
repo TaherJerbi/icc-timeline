@@ -3,6 +3,12 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.jsx"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@gql-types/*": ["src/gql/*"],
+      "@utils/*": ["src/utils/*"]
+    }
   }
 }
